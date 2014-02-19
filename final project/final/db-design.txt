@@ -1,0 +1,35 @@
+Inventory 
+         item_id: INT, primary key
+         item_name: CHAR(30), name of item
+         price: DECIMAL(5, 2), item price
+         stock: INT, available stock of item
+         description: VARCHAR(255), description of item, possibly null
+         image: VARCHAR(255), the link for the item image, possibly null
+
+
+Order 
+         order_id: INT, primary key 
+         customer_id: INT, foreign key to Customer table
+         order_time: DATETIME
+         shipping_address: VARCHAR(255)
+         billing_address: VARCHAR(255)
+         email: CHAR(30)
+         zipcode: CHAR(5)
+         total_price: DECIMAL(5,2)
+
+Order_item
+         order_id: INT, foreign key to Order table
+         item_id: INT, foreign key to Inventory table
+
+         The primary key for Order_item table is order_id and item_id
+
+Customer
+         Customer_id: INT, primary key
+         username: CHAR(20)
+         password: CHAR(20)
+
+Administrator
+
+         id: INT, primary key
+         username: CHAR(20)
+         password: CHAR(20)

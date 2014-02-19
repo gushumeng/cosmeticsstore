@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Check out--Cosmetics Store</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script src="/Courses/comp426-f13/jquery-1.10.2.js"></script>
+    <script src="js/Item.js"></script>
+    <script src="js/checkout.js"></script>
+	
+</head>
+<body>
+	<div id="page">
+		<div id="header">
+			<div id="logo">
+				<a href="index.html"><img src="images/logo.jpg" alt="LOGO"></a>
+			</div>
+			<div id="navigation">
+				<ul>
+					<li>
+						<a href="index.html">home</a>
+					</li>
+					
+					<li>
+						<a href="face-list.html">Face</a>
+					</li>
+					<li>
+						<a href="eyes-list.html">Eyes</a>
+					</li>
+					<li>
+						<a href="lips-list.html">lips</a>
+					</li>
+					<li class="viewCart">
+						<a href="check-out.html">view cart</a>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		<div id="contents">
+			<div id="main">
+			<div id='cart-list'>
+				 <!--this part is used for loading cart information-->
+			</div>
+			<div id='customer-info'>
+				
+					shipping address: <input id="shipping_address"  type="text"><br>
+					billing address: <input id="billing_address" type="text"><br>
+					email: <input id="email" type="text"><br>
+					zip code: <input id="zipcode" type ="text"><br>
+					<button type="button" id="backtoshop" class="green button"> Continue Shopping</button>
+					<button type="button" id="checkout" class="green button"> Place an Order</button> 
+				
+			</div>			    
+			</div>
+			<div id="sidebar">
+				<h1>Cosmetics</h1>
+				<ul class="menu">
+					<li>
+						<span>Face</span>
+					</li>
+					<li>
+						<span>Eyes</span>
+					</li>
+					<li>
+						<span>Lips</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="footer">
+			<p id="footnote">
+				© Cosmetics Store 2013 .All rights reserved--Designed by Liuliu Fan and Shumeng Gu</a> .
+			</p>
+		</div>
+	</div>
+</body>
+</html>

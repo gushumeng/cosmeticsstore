@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://www.cs.unc.edu/Courses/comp426-f13/kmp/a5/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Final Project--Liuliu Fan and Shumeng Gu </title>
+<style>
+	td, th {
+		border: thin solid black;
+	}
+	tr:nth-child(2n) {
+		background-color: #aaaaff;
+	}
+	tr td:first-child {
+		width: 3em;
+	}
+	tr td:first-child + td {
+		width: 20em;
+	}
+</style>
+</head>
+
+<body>
+<h1>Final Project</h1>
+<h2> Team members</h2>
+<p>Liuliu Fan 720365900 &amp; Shumeng Gu 720366748</p>
+<h2>Links</h2>
+<p>Customer Interface: <a href="http://wwwp.cs.unc.edu/Courses/comp426-f13/shumengg/final-project/client-side/login.html">here<a></p>
+<p>Administrator Interface: <a href="http://wwwp.cs.unc.edu/Courses/comp426-f13/fanl/test/client-side/login.html">here<a></p>
+<h2>Description</h2>
+<p>
+		Description: This is a online shopping store which sells cosmetics product.
+</p>
+<p>
+		Functions of our web application: 
+		<ul>
+			<li>
+				From the customer interface, the customers can log in with their username and password. Then they can choose to put the products in the shopping cart and check out. They can also view previous order history.
+			</li>
+			<li>
+				From the administrator interface, the administrator can log in, view, add, delete and update all the items in the inventory. She can also view all orders placed by the customers and update them.
+				
+			</li>
+			
+			<li>
+				All items information and order information will be retrieved from the database and the interface is dynamic. 
+			</li>
+			
+		</ul>
+	</p>
+
+
+<h2>RESTful Interfaces to Cosmetics Store</h2>
+
+
+<table>
+	<thead>
+		<tr><th>HTTP Method</th>
+			<th>URL Form</th>
+			<th>Parameters</th>
+			<th>Result structure</th>
+			<th>Description</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>POST</td>
+			<td>/customer.php</td>
+			<td><dl>
+					<dt>username</dt>
+					<dt>password</dt>
+					
+				</dl>
+			</td>
+			<td>true/false</td>
+			<td>Customer uses their user name to log in. The username and password should correspond to the existing row in the CUSTOMER table in the database</td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/login.php</td>
+			<td><dl>
+					<dt>username</dt>
+					<dt>password</dt>
+					
+				</dl>
+			</td>
+			<td>true/false</td>
+			<td>Administrator uses their user name to log in. The username and password should correspond to the existing row in the ADMINISTRATOR table in the database</td>
+		</tr>
+
+		<tr><td>GET</td>
+			<td>/item-category.php/<em>&lt;id&gt;</em></td>
+			<td>None recognized</td>
+			<td>array of integers</td> 
+			<td>Index of numeric id`s of all cosmetics items in a specific category </td>
+		</tr>
+
+		<tr><td>GET</td>
+			<td>/item.php/<em>&lt;id&gt;</em></td>
+			<td>None recognized</td>
+			<td>item object</td>
+			<td>Information about a specific cosmetic item specified by id is returned. 404 Not Found will be returned if id specified is not legal.</td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/cart.php</td>
+			<td><dl>
+					<dt>item_id</dt>
+					<dt>name</dt>
+					<dt>price</dt>
+					<dt>quantity</dt>
+				</dl>
+			</td>
+			<td>true or false</td>
+			<td>Add a new item with its quantity in the cart. The information will be stored in $_SESSION['cart'] as an array </td>
+		</tr>
+        
+        <tr><td>GET</td>
+			<td>/cart.php</td>
+			<td>None recognized</td>
+			<td>an array of stored items in cart</td>
+			<td>A list of all items that were put in the cart</td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/placeorder.php</td>
+			<td><dl>
+					<dt>cart_array</dt>
+					<dt>billing address</dt>
+					<dt>shipping address</dt>
+					<dt>email</dt>
+					<dt>zipcode</dt>
+					<dt>total price</dt>
+				</dl>
+			</td>
+			<td>true or false</td>
+			<td>Creates a new order row in the database and the corresponding items in the order_item table. It also updates the inventory and substracts the ordered item's stock by the required quantity.</td>
+		</tr>
+
+
+		<tr><td>GET</td>
+			<td>/inventory.php</td>
+			<td>None recognized</td>
+			<td>an array of item id in INVENTORY table</td>
+			<td>A list of item id </td>
+		</tr>
+
+        
+        <tr><td>POST</td>
+			<td>/inventory.php/<em>&lt;id&gt;</em></td>
+			<td><dl>
+				<dt>price</dt>
+				<dd>New price for item</dd>
+				<dt>stock</dt>
+				<dd>New stock for item</dd>
+				<dt>description</dt>
+				<dd>New description for item</dd>
+				<dt>image</dt>
+				<dd>New image url for item</dd>
+
+			</dl></td>
+			<td>item object</td>
+			<td>Updates price, stock, description, and image information for item object with corresponding &lt;id&gt;. Returns updated item object if successful. 400 Bad Request generated if price, stock, description, or image is illegal. 404 Not Found generated if id is not recognized. </td>
+		</tr>
+
+		<tr><td>GET</td>
+			<td>/inventory.php/<em>&lt;id&gt;</em></td>
+			<td><dt>
+				<dl>delete</dl>
+				<dd>Value ignored</dd>
+            </dt></td>
+			<td>True</td>
+			<td>Item object with corresponding &lt;id&gt; is deleted. Form of URL is same as above for retrieving an item object with the presence of the â€œdeleteâ€?parameter. Value of delete parameter is not used. Result is true if item identified by id existed and was deleted. 404 Not Found returned if id is not recognized as legal. The means that first access will delete item and any subsequent access to the same URL will result in 404.</td>
+		</tr>
+
+		<tr><td>GET</td>
+			<td>/inventory.php</td>
+			<td>
+				<dl>
+				<dt>delete</dt>
+				<dd>Value ignored</dd>
+				</dl></td>
+			<td>True</td>
+			<td>Item object with corresponding &lts;id&gts; is deleted. Value of delete parameter is not used. Result is true if order identified by id existed and was deleted. 404 Not Found returned if id is not recognized as legal. The means that first access will delete item and any subsequent access to the same URL will result in 404.</td>
+		</tr>
+
+
+			<tr><td>GET</td>
+			<td>/order.php</td>
+			<td>
+				<dl>
+				<dt>delete</dt>
+				<dd>Value ignored</dd>
+				</dl></td>
+			<td>True</td>
+			<td>Order object with corresponding &lts;id&gts; is deleted. Form of URL is same as above for retrieving an order object with the presence of the â€œdeleteâ€?parameter. Value of delete parameter is not used. Result is true if order identified by id existed and was deleted. 404 Not Found returned if id is not recognized as legal. The means that first access will delete item and any subsequent access to the same URL will result in 404.</td>
+		</tr>
+
+
+		<tr><td>GET</td>
+			<td>/order.php/<em>&lt;id&gt;</em></td>
+			<td>None recognized</td>
+			<td>{order_id: <em>Integer</em>, <br>
+			     user_name: <em>String</em>, <br>
+			     date: <em>String</em>, <br>
+			     shipping_address: <em>String</em>, <br>
+			     billing_address: <em>String</em>, <br>
+			     zipcode: <em>String</em>, <br>
+			     total_price: <em>Integer</em>, <br>
+			     order_item: <em>order_item object (see below)</em> }</td>
+			<td>Order object with corresponding <id> will be returned. Order Information object contains complementary information of order. 404 Not Found generated if id is not legal. 
+			</td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/order.php</td>
+			<td><dt>
+				<dl>username, </dl>
+				<dl>date, </dl>
+				<dl>shipping_address, </dl>
+				<dl>billing_address, </dl>
+				<dl>zipcode, </dl>
+				<dl>total_price</dl>
+            </dt></td>
+			<td>order object</td>
+			<td>Creates a new order recording information provided in the parameters. If successful, result is corresponding order object with id information of new transaction. 400 Bad Request generated if order can not be recorded because username, date, shipping_address, billing_address, zipcode, or total_price is not valid.</td>
+		</tr>
+
+        <tr><td>GET</td>
+			<td>/order_item.php/<em>&lt;id&gt;</em></td>
+			<td>None Recognized</td>
+			<td>order_item object</td>
+			<td>item in a specific order object with corresponding &lt;order_id&gt; is retrieved.</td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/order_item.php</td>
+			<td>
+				<dl>
+				<dt>order_id</dt>
+				<dt>item_id</dt>
+				<dt>quantity</dt>
+				</dl></td>
+			<td>Order_item object</td>
+			<td>Creates a new order_item recording information provided in the parameters. The order_item object record information of each item included in a particular order record. If successful, result is corresponding order_item object with id information of new order_item. 400 Bad Request generated if transaction can not be recorded because order_id, item_id, or quantity is not valid. </td>
+		</tr>
+
+	
+
+
+	</tbody>
+</table>
+
+
+
+<h3>Item:</h3>
+
+An item object is JSON encoded as follows:
+<blockquote>
+{item_id: Integer,<br>
+ price: Integer,<br>
+ stock: Integer,<br>
+ description: String,<br>
+ image: String}
+
+</blockquote>
+
+<h3>order_item:</h3>
+
+Each order_item object means the information (such as quantity) of each item in a particular order. <br>
+An order_item object is JSON encoded as follows:
+
+<blockquote>
+{order_id: Integer,<br>
+ item_id: Integer,<br>
+ quantity: Integer}
+
+</blockquote>
+
+<h3>Order:</h3>
+
+An Order object is JSON encoded as follows:
+
+<blockquote>
+{order_id: Integer,<br>
+username: String,<br>
+date: String,<br>
+shipping_address: String, <br>
+billing_address: String,<br>
+zipcode: String,<br>
+total_price: Integer<br>}
+
+
+</blockquote>
+
+<h2>Database Schema to Cosmetics Store Draft</h2>
+
+<a href="db-design.txt">Link to database schema design.</a>
+
+
+
+
+</body></html>

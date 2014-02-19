@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Login</title>
+
+    <link rel="stylesheet" type="text/css" href="css/administration.css">
+    <script src="http://www.cs.unc.edu/Courses/comp426-f13/jquery-1.10.2.js"></script>
+    <script>
+    $(document).ready(function(){
+
+    $('form.login_form').submit(
+        function (e) {
+            e.preventDefault();
+
+            $.ajax("http://wwwp.cs.unc.edu/Courses/comp426-f13/shumengg/final-project/server-side/login.php",
+                {type: "POST",
+                    dataType: "json",
+                    data: $(this).serialize(),
+                    success: function() {
+                        window.location = "index.html";ss
+                    },
+                    error: function(jqXHR, status, error) {
+                        alert(jqXHR.responseText);
+                    }});
+        }
+    );
+});
+    </script>
+    
+
+</head>
+<body>
+
+<form class="login_form">
+
+    <p>Name: <input name="username" /></p>
+    <p>Password: <input name="password" type="password" /></p>
+    <p><input type="submit" /></p>
+
+</form>
+
+
+
+</body>
+</html>

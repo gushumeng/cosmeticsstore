@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Cosmetic Store Administration System</title>
+    <link rel="stylesheet" type="text/css" href="administration.css">
+    <script src="http://www.cs.unc.edu/Courses/comp426-f13/jquery-1.10.2.js"></script>
+	<script src="jquery.dataTables.js"></script>
+    <script src="administration.js"></script>
+	<script src="admin.js"></script>
+</head>
+
+
+<body>
+    <div id="page">
+        <div id="header">
+	        <div id="title">Administration System</div>
+	    </div>
+	    <div id="sidebar">
+		    <ul id="sideList">
+			    <li><a id="a_inventory" >INVENTORY</a> <button id="inventory_add" >add inventory</button> </li>
+				<li><a id="a_order" >ORDER</a></li>
+			</ul>
+	    </div>
+        <div id="list">
+		<table id="inventory">
+		    <tr>
+			    <th class="th">ID</th>
+				<th class="th">Name</th>
+				<th class="th">Category</th>
+				<th class="th">Price</th>
+				<th class="th">Stock</th>
+				<th class="th">Description</th>
+				<th class="th">Image</th>
+				<th class="th">Delete</th>
+			</tr>
+		</table>
+		<table id="order">
+		    <tr>
+			    <th class="th">Order ID</th>
+				<th class="th">Customer ID</th>
+				<th class="th">Order Time</th>
+				<th class="th">Shipping Address</th>
+				<th class="th">Billing Address</th>
+				<th class="th">Email</th>
+				<th class="th">Zipcode</th>
+				<th class="th">Total Price</th>
+				<th class="th">Delete</th>
+			</tr>
+		</table>
+			<div id="order_item">
+		    <table id="tb_order_item">
+			    <tr>
+			    <th class="th">Item ID</th>
+				<th class="th">Quantity</th>
+			    </tr>
+			</table>
+		   <div>
+	    </div>
+		
+
+		
+	</div>
+	
+
+</body>
+
+</html>
